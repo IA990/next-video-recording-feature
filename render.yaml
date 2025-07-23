@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: maboutique-backend
+    env: docker
+    dockerfilePath: ./Dockerfile
+    plan: starter
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: maboutique-db
+          property: connectionString
+      - key: FIREBASE_CREDENTIALS
+        value: $FIREBASE_CREDENTIALS_JSON
+      - key: SECRET_KEY
+        value: $SECRET_KEY
+databases:
+  - name: maboutique-db
+    engine: postgres
+    version: "14"
+    extensions:
+      - postgis
+    plan: starter
